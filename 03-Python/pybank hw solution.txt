@@ -1,0 +1,65 @@
+import os
+import csv
+
+# Path to budget data
+csvpath = os.path.join(r"C:\Users\ahasa\OneDrive\Desktop\smu-dal-data-pt-03-2020-u-c\02-Homework\03-Python\Instructions\PyBank\Resources\budget_data.csv")
+
+#working variables
+months = 0
+month_number = []
+amount_difference = []
+net_total = 0
+greatest_increase_profit = ["", 0]
+greatest_decrease_losses = ["", 99999999999]
+
+
+with open(csvpath, newline='') as csvfile:
+
+    csvreader = csv.reader(csvfile, delimiter=',')
+    
+    # header row 
+    csv_header = next(csvreader)
+
+    
+    row_one = next(csvreader)
+    months += 1
+    net_total += int(row_one[1])
+    previous_amount = int(row_one[1])
+
+    # look ahead
+    for row in csvreader:
+        months += 1
+        net_total += int(row[1])
+        
+        amount = int(row[1]) - previous_amount
+        previous_amount = int(row[1])
+        amount_difference += [amount]
+        month_number = [month_number] + [row[0]]
+
+        # Greatest increase
+        if amount > greatest_increase_profit[1]:
+            greatest_increase_profit[1] = amount
+            greatest_increase_profit[0] = row[0]
+
+        # Greatest decrease
+        if amount < greatest_decrease_losses[1]:
+            greatest_decrease_losses[1] = amount
+            greatest_decrease_losses[0] = row[0]
+
+
+# find the average change
+average_change = sum(amount_difference) / len(amount_difference)
+
+
+#Summary 
+financial_analysis = (
+    f"Financial Analysis\n"
+    f"--------------------------------------------------\n"
+    f"Total number of  Months: {months}\n"
+    f"Total net Amount: ${net_total}\n"
+    f"Average Change: ${average_change:.2f}\n"
+    f"Greatest Increase in Profits: {greatest_increase_profit[0]} (${greatest_increase_profit[1]})\n"
+    f"Greatest Decrease in Profits: {greatest_decrease_losses[0]} (${greatest_decrease_losses[1]})")
+
+print(financial_analysis)
+
