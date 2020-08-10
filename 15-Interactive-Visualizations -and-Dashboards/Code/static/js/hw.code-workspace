@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "..\\..\\..\\data"
+		},
+		{
+			"path": "..\\..\\..\\Images"
+		},
+		{
+			"path": "..\\.."
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "StarterCode",
+		"liveServer.settings.port": 5501
+	}
+}
